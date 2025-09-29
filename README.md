@@ -23,7 +23,3 @@ Database: SQLite (default, can be replaced with PostgreSQL/MySQL)
 Frontend: Django Templates, Bootstrap/Tailwind (customizable)
 Others: Crispy Forms (optional for UI)
 
-
-
-Dispatch End – where delivery personnel receive prepared orders and mark them as delivered
-Authentication and user management are handled via Django Allauth for easy login, signup, and social authentication
