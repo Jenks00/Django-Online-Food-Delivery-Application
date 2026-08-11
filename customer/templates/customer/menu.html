@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}Menu{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <p class="eyebrow">Full menu</p>
+    <h1>What's on our menu?</h1>
+    <p class="lede">Everything is made fresh once your order lands in the kitchen.</p>
+  </div>
+</div>
+
+<div class="container menu-search">
+  <form method="GET" action="{% url 'menu-search' %}" role="search">
+    <input type="search" name="q" placeholder="Search dishes by name or description" aria-label="Search the menu" value="{{ query }}">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+</div>
+
+<div class="container">
+  {% if menu_items %}
+  <div class="menu-grid">
+    {% for item in menu_items %}
+    <article class="card menu-card">
+      {% if item.image %}
+      <img class="menu-card-image" src="{{ item.image.url }}" alt="{{ item.name }}">
+      {% endif %}
+      <div class="menu-card-body">
+        <h3>{{ item.name }}</h3>
+        <p class="menu-card-desc">{{ item.description }}</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">${{ item.price|floatformat:2 }}</span>
+          <a class="btn btn-outline btn-sm" href="{% url 'product' item.id %}">View</a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <h4>No dishes match your search</h4>
+    <p>Try a different search term, or browse the <a href="{% url 'menu' %}">full menu</a>.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}Place an Order{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <p class="eyebrow">Start an order</p>
+    <h1>Pick a dish to get started</h1>
+    <p class="lede">Add dishes to your cart, then check out when you're ready.</p>
+  </div>
+</div>
+
+<div class="container">
+  {% if menu %}
+  <div class="menu-grid">
+    {% for item in menu %}
+    <article class="card menu-card">
+      {% if item.image %}
+      <img class="menu-card-image" src="{{ item.image.url }}" alt="{{ item.name }}">
+      {% endif %}
+      <div class="menu-card-body">
+        <h3>{{ item.name }}</h3>
+        <p class="menu-card-desc">{{ item.description }}</p>
+        <div class="menu-card-footer">
+          <span class="menu-card-price">${{ item.price|floatformat:2 }}</span>
+          <a class="btn btn-outline btn-sm" href="{% url 'product' item.id %}">Add to cart</a>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <h4>The menu is empty right now</h4>
+    <p>Check back soon &mdash; the kitchen hasn't published any dishes yet.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,115 @@
+{% extends 'cook/_base.html' %}
+{% block head_title %}Kitchen Dashboard{% endblock %}
+
+{% block content %}
+<div class="container dashboard-header">
+  <p class="eyebrow" style="text-transform:uppercase;letter-spacing:.12em;font-size:var(--step--1);font-weight:700;color:var(--color-accent-strong);">Kitchen</p>
+  <h1>Today's orders</h1>
+  <p class="lede">Move each order from New to Cooking to Ready as your kitchen works through it.</p>
+</div>
+
+<div class="container">
+  <div class="stat-row">
+    <div class="card stat-card">
+      <span class="label">Today's revenue</span>
+      <span class="value">${{ total_revenue|floatformat:2 }}</span>
+    </div>
+    <div class="card stat-card">
+      <span class="label">Today's orders</span>
+      <span class="value">{{ total_orders }}</span>
+    </div>
+  </div>
+
+  <div class="board">
+    <section class="board-column">
+      <div class="board-column-header">
+        <h3>New</h3>
+        <span class="board-count">{{ new_orders|length }}</span>
+      </div>
+      {% for order in new_orders %}
+      <article class="order-card">
+        <div class="order-card-top">
+          <span class="order-id">#{{ order.pk }}</span>
+          <span class="badge badge-placed">New</span>
+        </div>
+        <p class="customer-name">{{ order.name }}</p>
+        <p class="items-summary">{{ order.get_cart_items }} item{{ order.get_cart_items|pluralize }}</p>
+        <div class="order-card-footer">
+          <span class="total">${{ order.get_cart_total|floatformat:2 }}</span>
+          <div style="display:flex; gap: var(--space-2);">
+            <a class="btn btn-outline btn-sm" href="{% url 'order_details' order.pk %}">View</a>
+            <form method="POST" action="{% url 'order_details' order.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-primary btn-sm" type="submit">Start cooking</button>
+            </form>
+          </div>
+        </div>
+      </article>
+      {% empty %}
+      <div class="empty-state">
+        <h4>No new orders</h4>
+        <p>New orders will show up here as soon as they're placed.</p>
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="board-column">
+      <div class="board-column-header">
+        <h3>Cooking</h3>
+        <span class="board-count">{{ cooking_orders|length }}</span>
+      </div>
+      {% for order in cooking_orders %}
+      <article class="order-card">
+        <div class="order-card-top">
+          <span class="order-id">#{{ order.pk }}</span>
+          <span class="badge badge-cooking">Cooking</span>
+        </div>
+        <p class="customer-name">{{ order.name }}</p>
+        <p class="items-summary">{{ order.get_cart_items }} item{{ order.get_cart_items|pluralize }}</p>
+        <div class="order-card-footer">
+          <span class="total">${{ order.get_cart_total|floatformat:2 }}</span>
+          <div style="display:flex; gap: var(--space-2);">
+            <a class="btn btn-outline btn-sm" href="{% url 'order_details' order.pk %}">View</a>
+            <form method="POST" action="{% url 'order_details' order.pk %}">
+              {% csrf_token %}
+              <button class="btn btn-primary btn-sm" type="submit">Mark ready</button>
+            </form>
+          </div>
+        </div>
+      </article>
+      {% empty %}
+      <div class="empty-state">
+        <h4>Nothing cooking</h4>
+        <p>Orders you start cooking will appear here.</p>
+      </div>
+      {% endfor %}
+    </section>
+
+    <section class="board-column">
+      <div class="board-column-header">
+        <h3>Ready for pickup</h3>
+        <span class="board-count">{{ ready_orders|length }}</span>
+      </div>
+      {% for order in ready_orders %}
+      <article class="order-card">
+        <div class="order-card-top">
+          <span class="order-id">#{{ order.pk }}</span>
+          <span class="badge badge-ready">Ready</span>
+        </div>
+        <p class="customer-name">{{ order.name }}</p>
+        <p class="items-summary">{{ order.get_cart_items }} item{{ order.get_cart_items|pluralize }}</p>
+        <div class="order-card-footer">
+          <span class="total">${{ order.get_cart_total|floatformat:2 }}</span>
+          <a class="btn btn-outline btn-sm" href="{% url 'order_details' order.pk %}">View</a>
+        </div>
+      </article>
+      {% empty %}
+      <div class="empty-state">
+        <h4>Nothing waiting on dispatch</h4>
+        <p>Orders marked ready will wait here for a rider.</p>
+      </div>
+      {% endfor %}
+    </section>
+  </div>
+</div>
+{% endblock content %}

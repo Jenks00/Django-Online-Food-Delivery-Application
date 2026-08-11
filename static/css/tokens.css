@@ -1,0 +1,334 @@
+/*
+  Design tokens shared by every page of the site: the customer storefront
+  and both internal dashboards. Keeping everything on custom properties
+  makes it possible to give the cook and dispatch dashboards their own
+  visual identity without duplicating layout rules.
+*/
+
+:root {
+  /* --- Brand palette: warm, food-forward, not "default Bootstrap blue" --- */
+  --color-terracotta-50: #fdf3ee;
+  --color-terracotta-100: #fbe2d4;
+  --color-terracotta-300: #ec9c74;
+  --color-terracotta-500: #d6602f;
+  --color-terracotta-600: #bf4c1f;
+  --color-terracotta-700: #9c3c18;
+
+  --color-charcoal-50: #f6f5f3;
+  --color-charcoal-100: #e8e5e1;
+  --color-charcoal-300: #a9a29a;
+  --color-charcoal-500: #5b544c;
+  --color-charcoal-700: #362f28;
+  --color-charcoal-900: #1c1712;
+
+  --color-cream: #faf6f1;
+  --color-cream-dim: #f1ebe2;
+  --color-white: #ffffff;
+
+  --color-green-500: #3f7d58;
+  --color-green-100: #e2f0e7;
+  --color-amber-500: #c98a12;
+  --color-amber-100: #fbedd0;
+  --color-blue-500: #3a6ea5;
+  --color-blue-100: #e2ecf5;
+  --color-red-500: #b3432f;
+  --color-red-100: #f8e4df;
+
+  /* --- Semantic roles --- */
+  --color-bg: var(--color-cream);
+  --color-surface: var(--color-white);
+  --color-border: var(--color-charcoal-100);
+  --color-text: var(--color-charcoal-900);
+  --color-text-muted: var(--color-charcoal-500);
+  --color-accent: var(--color-terracotta-500);
+  --color-accent-strong: var(--color-terracotta-600);
+  --color-accent-contrast: var(--color-white);
+  --color-focus-ring: #1f6fd1;
+
+  /* --- Type --- */
+  --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --step--1: clamp(0.79rem, 0.77rem + 0.1vw, 0.85rem);
+  --step-0: clamp(0.95rem, 0.92rem + 0.15vw, 1rem);
+  --step-1: clamp(1.1rem, 1.05rem + 0.25vw, 1.25rem);
+  --step-2: clamp(1.35rem, 1.25rem + 0.5vw, 1.6rem);
+  --step-3: clamp(1.7rem, 1.5rem + 1vw, 2.1rem);
+  --step-4: clamp(2.1rem, 1.8rem + 1.5vw, 2.75rem);
+
+  /* --- Spacing scale --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-sm: 0 1px 2px rgba(28, 23, 18, 0.06), 0 1px 1px rgba(28, 23, 18, 0.04);
+  --shadow-md: 0 8px 24px rgba(28, 23, 18, 0.08), 0 2px 6px rgba(28, 23, 18, 0.06);
+  --shadow-lg: 0 20px 45px rgba(28, 23, 18, 0.14);
+
+  --max-width: 1180px;
+}
+
+/* Dashboards get a darker, more "operational" surface than the storefront,
+   while reusing every other token above. */
+body[data-area="cook"] {
+  --color-bg: var(--color-charcoal-900);
+  --color-surface: #241e18;
+  --color-border: #3a322a;
+  --color-text: #f4efe8;
+  --color-text-muted: #b4aa9d;
+  --color-accent: var(--color-amber-500);
+  --color-accent-strong: #a8730c;
+  --color-accent-contrast: var(--color-charcoal-900);
+}
+
+body[data-area="dispatch"] {
+  --color-bg: #101b26;
+  --color-surface: #17273a;
+  --color-border: #24384e;
+  --color-text: #edf3f9;
+  --color-text-muted: #9db1c4;
+  --color-accent: var(--color-blue-500);
+  --color-accent-strong: #2c5580;
+  --color-accent-contrast: var(--color-white);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  margin: 0 0 var(--space-3);
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-2); }
+h4 { font-size: var(--step-1); }
+
+p { margin: 0 0 var(--space-3); }
+
+a {
+  color: var(--color-accent-strong);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Visible, brand-colored focus states everywhere -- buttons, links,
+   inputs, cards used as controls. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.card-action:focus-visible {
+  outline: 3px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  padding: 0.65em 1.25em;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+  line-height: 1.2;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-contrast);
+}
+
+.btn-primary:hover {
+  background: var(--color-accent-strong);
+  text-decoration: none;
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: currentColor;
+  color: var(--color-text);
+}
+
+.btn-outline:hover {
+  background: rgba(0, 0, 0, 0.04);
+  text-decoration: none;
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: var(--color-red-500);
+  color: var(--color-red-500);
+}
+
+.btn-danger:hover {
+  background: var(--color-red-100);
+  text-decoration: none;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-sm {
+  padding: 0.4em 0.9em;
+  font-size: var(--step--1);
+}
+
+/* --- Forms --- */
+.field {
+  margin-bottom: var(--space-4);
+}
+
+.field label {
+  display: block;
+  font-weight: 600;
+  font-size: var(--step--1);
+  margin-bottom: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="tel"],
+input[type="search"],
+textarea,
+select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  padding: 0.65em 0.85em;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}
+
+/* --- Cards --- */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* --- Badges / status pills --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  padding: 0.3em 0.75em;
+  border-radius: 999px;
+  font-size: var(--step--1);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.badge-placed { background: var(--color-red-100); color: var(--color-red-500); }
+.badge-cooking { background: var(--color-amber-100); color: #8a5f0c; }
+.badge-ready { background: var(--color-green-100); color: var(--color-green-500); }
+.badge-out_for_delivery { background: var(--color-blue-100); color: var(--color-blue-500); }
+.badge-delivered { background: var(--color-charcoal-100); color: var(--color-charcoal-500); }
+
+/* --- Empty state --- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-7) var(--space-4);
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.empty-state h4 {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+/* --- Alerts / messages --- */
+.alert {
+  background: var(--color-terracotta-50);
+  border: 1px solid var(--color-terracotta-100);
+  color: var(--color-terracotta-700);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}

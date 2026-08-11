@@ -1,0 +1,67 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block head_title %}Basil{% endblock %} · Basil</title>
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  {% block extra_css %}{% endblock %}
+  {% block extra_head %}{% endblock %}
+</head>
+<body data-area="{% block body_area %}customer{% endblock %}">
+  {% block body %}
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="{% url 'nav' %}">
+        <span class="brand-mark">B</span>
+        Basil
+        {% block brand_role_badge %}{% endblock %}
+      </a>
+      {% block header_nav %}
+      <ul class="main-nav">
+        <li><a href="{% url 'nav' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'menu' %}">Menu</a></li>
+        <li>
+          <a class="nav-cart" href="{% url 'cart' %}" aria-label="View cart">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+            Cart
+          </a>
+        </li>
+      </ul>
+      {% endblock %}
+    </div>
+  </header>
+
+  {% if messages %}
+  <div class="container" style="padding-top: var(--space-4);">
+    {% for message in messages %}
+    <div class="alert">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>&copy; {% now "Y" %} Basil Kitchen. Built as a portfolio project.</span>
+      <ul class="footer-links">
+        <li><a href="{% url 'dashboard' %}">Kitchen dashboard</a></li>
+        <li><a href="{% url 'dashboard2' %}">Dispatch dashboard</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="{% url 'account_logout' %}">Sign out</a></li>
+        {% else %}
+        <li><a href="{% url 'account_login' %}">Staff sign in</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </footer>
+  {% endblock body %}
+  {% block extra_body %}{% endblock %}
+  <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

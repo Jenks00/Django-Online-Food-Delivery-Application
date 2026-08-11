@@ -1,0 +1,220 @@
+/* Shared kanban-style board used by both the cook and dispatch dashboards.
+   Visual identity (colors) comes from the [data-area] tokens in tokens.css;
+   layout is identical so the two roles feel like one consistent product. */
+
+.dashboard-header {
+  padding-block: var(--space-6) var(--space-4);
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.stat-card {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.stat-card .label {
+  font-size: var(--step--1);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.stat-card .value {
+  font-family: var(--font-mono);
+  font-size: var(--step-3);
+  font-weight: 700;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+  padding-block: var(--space-2) var(--space-8);
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.board-column {
+  background: color-mix(in srgb, var(--color-surface) 60%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  min-height: 8rem;
+}
+
+.board-column-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.board-column-header h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.board-count {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 700;
+}
+
+.order-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+
+.order-card:last-child {
+  margin-bottom: 0;
+}
+
+.order-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.order-card-top .order-id {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+}
+
+.order-card .customer-name {
+  font-weight: 600;
+  margin: 0 0 var(--space-1);
+}
+
+.order-card .items-summary {
+  font-size: var(--step--1);
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-3);
+}
+
+.order-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.order-card .total {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.order-card form {
+  margin: 0;
+}
+
+/* --- Order detail page --- */
+.order-detail-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-6);
+  padding-block: var(--space-6) var(--space-8);
+  align-items: start;
+}
+
+@media (max-width: 800px) {
+  .order-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.order-detail-grid .card {
+  padding: var(--space-5);
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--step--1);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row dt {
+  color: var(--color-text-muted);
+}
+
+.detail-row dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.status-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-5);
+}
+
+.status-tracker .step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.status-tracker .step .marker {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.status-tracker .step.done {
+  color: var(--color-text);
+}
+
+.status-tracker .step.done .marker {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.status-tracker .step.current .marker {
+  border-color: var(--color-accent);
+}

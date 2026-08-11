@@ -1,0 +1,56 @@
+{% extends 'dispatch/_base.html' %}
+{% block head_title %}Order #{{ order.pk }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header" style="padding-block: var(--space-6) var(--space-3);">
+    <a class="btn btn-outline btn-sm" href="{% url 'dashboard2' %}">&larr; Back to dashboard</a>
+    <h1 style="margin-top: var(--space-4);">Order #{{ order.pk }}</h1>
+  </div>
+</div>
+
+<div class="container order-detail-grid">
+  <div class="card">
+    <h3>Items</h3>
+    {% for item in order.orderitem_set.all %}
+    <div class="detail-row">
+      <dt>{{ item.menuItem.name }} &times; {{ item.quantity }}</dt>
+      <dd>${{ item.get_total|floatformat:2 }}</dd>
+    </div>
+    {% endfor %}
+    <div class="detail-row">
+      <dt>Total</dt>
+      <dd>${{ price|floatformat:2 }}</dd>
+    </div>
+
+    <h3 style="margin-top: var(--space-5);">Customer</h3>
+    <div class="detail-row"><dt>Name</dt><dd>{{ order.name }}</dd></div>
+    <div class="detail-row"><dt>Email</dt><dd>{{ order.email }}</dd></div>
+    <div class="detail-row"><dt>Address</dt><dd>{{ order.address }}</dd></div>
+    <div class="detail-row"><dt>Phone</dt><dd>{{ order.phone_no }}</dd></div>
+  </div>
+
+  <div class="card">
+    <h3>Delivery status</h3>
+    <div class="status-tracker">
+      <div class="step done"><span class="marker"></span>Ready for pickup</div>
+      <div class="step {% if order.status == 'out_for_delivery' %}current{% elif order.is_delivered %}done{% endif %}"><span class="marker"></span>Out for delivery</div>
+      <div class="step {% if order.is_delivered %}done{% endif %}"><span class="marker"></span>Delivered</div>
+    </div>
+
+    {% if order.status == 'ready' %}
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-block">Out for delivery</button>
+    </form>
+    {% elif order.status == 'out_for_delivery' %}
+    <form method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-primary btn-block">Mark delivered</button>
+    </form>
+    {% else %}
+    <p style="color: var(--color-text-muted);">This order has been delivered.</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}

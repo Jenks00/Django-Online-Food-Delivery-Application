@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}Home{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div>
+      <div class="page-header" style="padding-block: 0;">
+        <p class="eyebrow">Order &middot; Track &middot; Enjoy</p>
+        <h1>Real food, cooked to order, tracked every step of the way.</h1>
+        <p class="lede">Basil connects your order straight to the kitchen and the rider bringing it to your door &mdash; no guessing where it is.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{% url 'menu' %}">Browse the menu</a>
+        <a class="btn btn-outline" href="{% url 'about' %}">About Basil</a>
+      </div>
+      <div class="pipeline-strip">
+        <span class="pipeline-step"><span class="dot"></span>Placed</span>
+        <span class="pipeline-step"><span class="dot"></span>Cooking</span>
+        <span class="pipeline-step"><span class="dot"></span>Ready</span>
+        <span class="pipeline-step"><span class="dot"></span>Out for delivery</span>
+        <span class="pipeline-step"><span class="dot"></span>Delivered</span>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

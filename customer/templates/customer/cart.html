@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}Your Cart{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <p class="eyebrow">Step 2 of 2</p>
+    <h1>Your cart</h1>
+    <p class="lede">Review your order, then tell us where to send it.</p>
+  </div>
+</div>
+
+<div class="container cart-layout">
+  <div>
+    <a class="btn btn-outline btn-sm" href="{% url 'order' %}" style="margin-bottom: var(--space-4);">&larr; Continue shopping</a>
+
+    {% if order.orderitem_set.all %}
+    <div class="card cart-list">
+      {% for item in order.orderitem_set.all %}
+      <div class="cart-row">
+        {% if item.menuItem.image %}
+        <img src="{{ item.menuItem.image.url }}" alt="{{ item.menuItem.name }}">
+        {% endif %}
+        <div>
+          <p class="name">{{ item.menuItem.name }}</p>
+          <p class="unit-price">${{ item.menuItem.price|floatformat:2 }} each</p>
+        </div>
+        <p class="qty">Qty {{ item.quantity }}</p>
+        <p class="line-total">${{ item.get_total|floatformat:2 }}</p>
+        <a class="btn btn-danger btn-sm" href="{% url 'remove' item.id %}" data-confirm="Remove {{ item.menuItem.name }} from your cart?">Remove</a>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <h4>Your cart is empty</h4>
+      <p>Add a few dishes from the <a href="{% url 'order' %}">menu</a> to get started.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="card cart-summary">
+    <h3>Order summary</h3>
+    <dl>
+      <div><dt>Items</dt><dd>{{ order.get_cart_items }}</dd></div>
+      <div class="total"><dt>Total</dt><dd>${{ order.get_cart_total|floatformat:2 }}</dd></div>
+    </dl>
+
+    {% if order.orderitem_set.all %}
+    <form class="checkout-form" method="POST" action="{% url 'cart' %}">
+      {% csrf_token %}
+      <h4 style="margin-top:0;">Delivery details</h4>
+      <div class="field-grid">
+        <div class="field">
+          <label for="id_name">Full name</label>
+          <input required id="id_name" class="form-control" type="text" placeholder="Your name" name="name">
+        </div>
+        <div class="field">
+          <label for="id_email">Email address</label>
+          <input required id="id_email" class="form-control" type="email" placeholder="you@example.com" name="email">
+        </div>
+      </div>
+      <div class="field">
+        <label for="id_address">Delivery address</label>
+        <input required id="id_address" class="form-control" type="text" placeholder="Street, city" name="address">
+      </div>
+      <div class="field">
+        <label for="id_phone_no">Phone number</label>
+        <input required id="id_phone_no" class="form-control" type="tel" placeholder="Phone number" name="phone_no">
+      </div>
+      <button class="btn btn-primary btn-block" type="submit">Place order &middot; ${{ order.get_cart_total|floatformat:2 }}</button>
+      <p class="menu-card-desc" style="text-align:center;margin-top:var(--space-3);">Pay with cash on delivery.</p>
+    </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
