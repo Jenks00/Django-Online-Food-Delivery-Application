@@ -11,6 +11,31 @@ class StaffDashboardMixin(UserPassesTestMixin):
         return user.is_staff or user.groups.filter(name='staff').exists()
 
 
+class StaffRedirect(LoginRequiredMixin, View):
+    """Send a signed-in staff member straight to their dashboard, or let
+    them pick when they hold access to more than one of the kitchen,
+    dispatch, and menu dashboards."""
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        access = {
+            'cook': user.is_staff or user.groups.filter(name='staff').exists(),
+            'dispatch': user.is_staff or user.groups.filter(name='dispatch').exists(),
+            'menuadmin': user.is_staff or user.groups.filter(name='menu').exists(),
+        }
+        granted = [role for role, allowed in access.items() if allowed]
+
+        if len(granted) > 1:
+            return render(request, 'account/dashboard_picker.html', {'access': access})
+        if 'cook' in granted:
+            return redirect('dashboard')
+        if 'dispatch' in granted:
+            return redirect('dashboard2')
+        if 'menuadmin' in granted:
+            return redirect('menuadmin_dashboard')
+        return redirect('nav')
+
+
 class Dashboard(LoginRequiredMixin, StaffDashboardMixin, View):
     """Kitchen kanban board: New -> Cooking -> Ready for pickup."""
 

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body_area %}menuadmin{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">{% endblock %}
+{% block brand_role_badge %}<span class="brand-role">Menu</span>{% endblock %}
+{% block header_nav %}
+<ul class="main-nav">
+  <li><a href="{% url 'menuadmin_dashboard' %}">Dashboard</a></li>
+  {% if user.is_authenticated %}
+  <li><a href="{% url 'account_logout' %}">Sign out</a></li>
+  {% endif %}
+</ul>
+{% endblock %}

@@ -12,6 +12,7 @@ urlpatterns = [
     path('cook/', include('cook.urls')),
     path('customer/', include('customer.urls')),
     path('dispatch/', include('dispatch.urls')),
+    path('menu-admin/', include('menuadmin.urls')),
     path('', Home.as_view(), name='nav'),
     path('about/', About.as_view(), name='about'),
     path('menu/', Menu.as_view(), name='menu'),

@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views import View
 from django.db.models import Q
+from django.http import JsonResponse
+from django.contrib.auth import REDIRECT_FIELD_NAME
 from .models import *
 
 
@@ -26,7 +29,9 @@ def _get_or_create_customer(request):
 
 class Home(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'customer/nav.html')
+        featured_items = MenuItem.objects.order_by('?')[:6]
+        context = {'featured_items': featured_items}
+        return render(request, 'customer/nav.html', context)
 
 
 class About(View):
@@ -87,6 +92,9 @@ def product(request, pk):
         quantity = request.POST.get('quantity') or 1
         order_item.quantity = quantity
         order_item.save()
+
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'cart_count': ordermodel.get_cart_items})
         return redirect('cart')
 
     context = {'product': product}
@@ -112,6 +120,10 @@ class Ord(View):
         return render(request, 'customer/cart.html', context)
 
     def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            login_url = f"{reverse('account_login')}?{REDIRECT_FIELD_NAME}={reverse('cart')}"
+            return redirect(login_url)
+
         customer = _get_or_create_customer(request)
 
         name = request.POST.get('name')

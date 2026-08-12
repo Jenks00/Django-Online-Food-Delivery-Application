@@ -49,6 +49,7 @@
     </dl>
 
     {% if order.orderitem_set.all %}
+    {% if user.is_authenticated %}
     <form class="checkout-form" method="POST" action="{% url 'cart' %}">
       {% csrf_token %}
       <h4 style="margin-top:0;">Delivery details</h4>
@@ -70,9 +71,17 @@
         <label for="id_phone_no">Phone number</label>
         <input required id="id_phone_no" class="form-control" type="tel" placeholder="Phone number" name="phone_no">
       </div>
-      <button class="btn btn-primary btn-block" type="submit">Place order &middot; ${{ order.get_cart_total|floatformat:2 }}</button>
+      <button class="btn btn-primary btn-block" type="submit" data-confirm="Place this order for ${{ order.get_cart_total|floatformat:2 }}?">Place order &middot; ${{ order.get_cart_total|floatformat:2 }}</button>
       <p class="menu-card-desc" style="text-align:center;margin-top:var(--space-3);">Pay with cash on delivery.</p>
     </form>
+    {% else %}
+    <div class="checkout-signin">
+      <h4 style="margin-top:0;">Sign in to check out</h4>
+      <p class="menu-card-desc">Create a free account or sign in to place your order and track it from kitchen to door.</p>
+      <a class="btn btn-primary btn-block" href="{% url 'account_login' %}?next={% url 'cart' %}">Sign in</a>
+      <a class="btn btn-outline btn-block" href="{% url 'account_signup' %}?next={% url 'cart' %}" style="margin-top:var(--space-2);">Create an account</a>
+    </div>
+    {% endif %}
     {% endif %}
   </div>
 </div>

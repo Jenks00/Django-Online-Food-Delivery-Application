@@ -7,7 +7,7 @@
 <div class="container product-detail">
   <div>
     {% if product.image %}
-    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    <img id="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
     {% endif %}
   </div>
   <div>
@@ -16,13 +16,14 @@
     <p>{{ product.description }}</p>
     <p class="product-price">${{ product.price|floatformat:2 }}</p>
 
-    <form method="POST" action="{% url 'product' product.id %}">
+    <form method="POST" action="{% url 'product' product.id %}" data-add-to-cart data-fly-from="#product-image">
       {% csrf_token %}
       <div class="quantity-row">
         <label for="quantity" class="visually-hidden">Quantity</label>
         <input id="quantity" min="1" value="1" type="number" name="quantity">
         <button class="btn btn-primary" type="submit">Add to cart</button>
       </div>
+      <p class="add-to-cart-feedback" role="status" aria-live="polite" hidden>Added to cart.</p>
     </form>
     <a class="btn btn-outline" href="{% url 'menu' %}">&larr; Back to menu</a>
   </div>

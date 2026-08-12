@@ -50,10 +50,13 @@ INSTALLED_APPS = [
     'customer.apps.CustomerConfig',
     'cook.apps.CookConfig',
     'dispatch.apps.DispatchConfig',
+    'menuadmin.apps.MenuadminConfig',
 
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.apple',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -91,6 +94,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'customer.context_processors.cart',
             ],
         },
     },
@@ -155,9 +159,35 @@ MEDIA_URL = '/images/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-ACCOUNT_ADAPTER = 'cook.account_adapter.NoNewUsersAccountAdapter'
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = True
-LOGIN_REDIRECT_URL = 'dashboard'
+ACCOUNT_ADAPTER = 'customer.account_adapter.BasilAccountAdapter'
+LOGIN_REDIRECT_URL = 'staff_redirect'
+
+# Sign in / sign up with a username, email, or phone number, in any
+# combination -- plus Google and Apple below.
+ACCOUNT_LOGIN_METHODS = {'username', 'email', 'phone'}
+ACCOUNT_SIGNUP_FIELDS = ['username*', 'email', 'phone', 'password1*', 'password2*']
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APPS': [{
+            'client_id': os.environ.get('GOOGLE_CLIENT_ID', ''),
+            'secret': os.environ.get('GOOGLE_CLIENT_SECRET', ''),
+            'key': '',
+        }],
+        'SCOPE': ['profile', 'email'],
+    },
+    'apple': {
+        'APPS': [{
+            'client_id': os.environ.get('APPLE_CLIENT_ID', ''),
+            'secret': os.environ.get('APPLE_CLIENT_SECRET', ''),
+            'key': os.environ.get('APPLE_KEY_ID', ''),
+            'settings': {
+                'certificate_key': os.environ.get('APPLE_PRIVATE_KEY', ''),
+            },
+        }],
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

@@ -1,0 +1,28 @@
+{% extends "account/base.html" %}
+{% block head_title %}Choose a dashboard{% endblock %}
+
+{% block account_content %}
+<h1>Choose a dashboard</h1>
+<p class="subtitle">Your account has access to more than one. Where do you want to go?</p>
+
+<div class="dashboard-choice">
+  {% if access.cook %}
+  <a class="dashboard-choice-option" href="{% url 'dashboard' %}">
+    <span class="dashboard-choice-title">Kitchen</span>
+    <span class="dashboard-choice-desc">New, cooking, and ready for pickup orders.</span>
+  </a>
+  {% endif %}
+  {% if access.dispatch %}
+  <a class="dashboard-choice-option" href="{% url 'dashboard2' %}">
+    <span class="dashboard-choice-title">Dispatch</span>
+    <span class="dashboard-choice-desc">Ready, out for delivery, and delivered orders.</span>
+  </a>
+  {% endif %}
+  {% if access.menuadmin %}
+  <a class="dashboard-choice-option" href="{% url 'menuadmin_dashboard' %}">
+    <span class="dashboard-choice-title">Menu</span>
+    <span class="dashboard-choice-desc">Add, edit, and remove dishes on the storefront.</span>
+  </a>
+  {% endif %}
+</div>
+{% endblock %}

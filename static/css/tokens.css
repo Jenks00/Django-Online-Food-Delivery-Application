@@ -21,8 +21,9 @@
   --color-charcoal-700: #362f28;
   --color-charcoal-900: #1c1712;
 
-  --color-cream: #faf6f1;
-  --color-cream-dim: #f1ebe2;
+  --color-cream: #f1e6d5;
+  --color-cream-dim: #e7d5b8;
+  --color-surface-warm: #faf3e7;
   --color-white: #ffffff;
 
   --color-green-500: #3f7d58;
@@ -36,8 +37,8 @@
 
   /* --- Semantic roles --- */
   --color-bg: var(--color-cream);
-  --color-surface: var(--color-white);
-  --color-border: var(--color-charcoal-100);
+  --color-surface: var(--color-surface-warm);
+  --color-border: #ddc9a8;
   --color-text: var(--color-charcoal-900);
   --color-text-muted: var(--color-charcoal-500);
   --color-accent: var(--color-terracotta-500);
@@ -46,7 +47,7 @@
   --color-focus-ring: #1f6fd1;
 
   /* --- Type --- */
-  --font-display: Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
+  --font-display: 'Playfair Display', Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif;
   --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
@@ -83,23 +84,43 @@
 body[data-area="cook"] {
   --color-bg: var(--color-charcoal-900);
   --color-surface: #241e18;
+  --color-surface-2: #2c241b;
   --color-border: #3a322a;
   --color-text: #f4efe8;
   --color-text-muted: #b4aa9d;
   --color-accent: var(--color-amber-500);
+  --color-accent-2: var(--color-terracotta-500);
   --color-accent-strong: #a8730c;
   --color-accent-contrast: var(--color-charcoal-900);
+  --color-accent-soft: var(--color-amber-100);
 }
 
 body[data-area="dispatch"] {
   --color-bg: #101b26;
   --color-surface: #17273a;
+  --color-surface-2: #1c3044;
   --color-border: #24384e;
   --color-text: #edf3f9;
   --color-text-muted: #9db1c4;
   --color-accent: var(--color-blue-500);
+  --color-accent-2: #2fa3a0;
   --color-accent-strong: #2c5580;
   --color-accent-contrast: var(--color-white);
+  --color-accent-soft: var(--color-blue-100);
+}
+
+body[data-area="menuadmin"] {
+  --color-bg: #10190f;
+  --color-surface: #1a2618;
+  --color-surface-2: #202e1d;
+  --color-border: #2c3d28;
+  --color-text: #eef4ea;
+  --color-text-muted: #a6b89f;
+  --color-accent: var(--color-green-500);
+  --color-accent-2: #9fb832;
+  --color-accent-strong: #2d5c40;
+  --color-accent-contrast: var(--color-white);
+  --color-accent-soft: var(--color-green-100);
 }
 
 *,

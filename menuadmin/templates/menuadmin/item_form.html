@@ -1,0 +1,45 @@
+{% extends 'menuadmin/_base.html' %}
+{% block head_title %}{% if is_new %}Add a dish{% else %}Edit {{ item.name }}{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container dashboard-header">
+  <p class="eyebrow" style="text-transform:uppercase;letter-spacing:.12em;font-size:var(--step--1);font-weight:700;color:var(--color-accent-strong);">Menu</p>
+  <h1>{% if is_new %}Add a dish{% else %}Edit {{ item.name }}{% endif %}</h1>
+  <p class="lede">{% if is_new %}Give it a name, description, photo, and price. It'll appear on the storefront right away.{% else %}Update the details below.{% endif %}</p>
+</div>
+
+<div class="container">
+  <div class="card item-form-card">
+    {% if item.image %}
+    <img class="item-form-preview" src="{{ item.image.url }}" alt="{{ item.name }}">
+    {% endif %}
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="field">
+        <label for="id_name">Name</label>
+        {{ form.name }}
+        {{ form.name.errors }}
+      </div>
+      <div class="field">
+        <label for="id_description">Description</label>
+        {{ form.description }}
+        {{ form.description.errors }}
+      </div>
+      <div class="field">
+        <label for="id_price">Price ($)</label>
+        {{ form.price }}
+        {{ form.price.errors }}
+      </div>
+      <div class="field">
+        <label for="id_image">Photo</label>
+        {{ form.image }}
+        {{ form.image.errors }}
+      </div>
+      <div style="display:flex; gap: var(--space-3); margin-top: var(--space-5);">
+        <button class="btn btn-primary" type="submit">{% if is_new %}Add dish{% else %}Save changes{% endif %}</button>
+        <a class="btn btn-outline" href="{% url 'menuadmin_dashboard' %}">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock content %}
