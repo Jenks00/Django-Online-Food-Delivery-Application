@@ -1,0 +1,51 @@
+{% extends 'menuadmin/_base.html' %}
+{% block head_title %}Menu Dashboard{% endblock %}
+
+{% block content %}
+<div class="container dashboard-header">
+  <p class="eyebrow" style="text-transform:uppercase;letter-spacing:.12em;font-size:var(--step--1);font-weight:700;color:var(--color-accent-strong);">Menu</p>
+  <h1>Manage the menu</h1>
+  <p class="lede">Add, edit, or remove dishes. Changes show up on the storefront immediately.</p>
+</div>
+
+<div class="container">
+  <div class="stat-row">
+    <div class="card stat-card">
+      <span class="label">Menu items</span>
+      <span class="value">{{ menu_items|length }}</span>
+    </div>
+    <a class="btn btn-primary" href="{% url 'menuadmin_item_create' %}" style="align-self:center;">+ Add a dish</a>
+  </div>
+
+  {% if menu_items %}
+  <div class="item-list">
+    {% for item in menu_items %}
+    <div class="card item-row">
+      {% if item.image %}
+      <img class="item-thumb" src="{{ item.image.url }}" alt="{{ item.name }}">
+      {% else %}
+      <div class="item-thumb item-thumb-empty"></div>
+      {% endif %}
+      <div class="item-row-body">
+        <p class="item-row-name">{{ item.name }}</p>
+        <p class="item-row-desc">{{ item.description|truncatechars:90 }}</p>
+      </div>
+      <span class="item-row-price">${{ item.price|floatformat:2 }}</span>
+      <div class="item-row-actions">
+        <a class="btn btn-outline btn-sm" href="{% url 'menuadmin_item_update' item.pk %}">Edit</a>
+        <form method="POST" action="{% url 'menuadmin_item_delete' item.pk %}" data-confirm="Delete {{ item.name }}? This can't be undone.">
+          {% csrf_token %}
+          <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <h4>No dishes yet</h4>
+    <p>Add your first dish to get the menu started.</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock content %}

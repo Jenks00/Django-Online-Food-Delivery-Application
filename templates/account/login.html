@@ -1,0 +1,27 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block account_content %}
+<h1>{% trans "Sign in" %}</h1>
+<p class="subtitle">{% trans "Sign in with your username, email, or phone number." %}</p>
+
+{% include "account/snippets/social_login.html" %}
+
+<form class="login" method="POST" action="{% url 'account_login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-primary btn-block" type="submit">{% trans "Sign In" %}</button>
+  <p class="secondary-action">
+    {% url 'account_signup' as signup_url %}
+    {% if redirect_field_value %}
+    {% blocktrans %}Don't have an account? <a href="{{ signup_url }}?{{ redirect_field_name }}={{ redirect_field_value }}">Create one</a>.{% endblocktrans %}
+    {% else %}
+    {% blocktrans %}Don't have an account? <a href="{{ signup_url }}">Create one</a>.{% endblocktrans %}
+    {% endif %}
+  </p>
+</form>
+{% endblock %}

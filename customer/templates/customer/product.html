@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}{{ product.name }}{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container product-detail">
+  <div>
+    {% if product.image %}
+    <img id="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+    {% endif %}
+  </div>
+  <div>
+    <p class="eyebrow" style="text-transform:uppercase;letter-spacing:.12em;font-size:var(--step--1);font-weight:700;color:var(--color-accent-strong);">Menu item</p>
+    <h1>{{ product.name }}</h1>
+    <p>{{ product.description }}</p>
+    <p class="product-price">${{ product.price|floatformat:2 }}</p>
+
+    <form method="POST" action="{% url 'product' product.id %}" data-add-to-cart data-fly-from="#product-image">
+      {% csrf_token %}
+      <div class="quantity-row">
+        <label for="quantity" class="visually-hidden">Quantity</label>
+        <input id="quantity" min="1" value="1" type="number" name="quantity">
+        <button class="btn btn-primary" type="submit">Add to cart</button>
+      </div>
+      <p class="add-to-cart-feedback" role="status" aria-live="polite" hidden>Added to cart.</p>
+    </form>
+    <a class="btn btn-outline" href="{% url 'menu' %}">&larr; Back to menu</a>
+  </div>
+</div>
+{% endblock content %}

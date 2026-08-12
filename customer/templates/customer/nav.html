@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}Home{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div class="hero-panel">
+      <div class="page-header" style="padding-block: 0;">
+        <p class="eyebrow">Order &middot; Track &middot; Enjoy</p>
+        <h1>Real food, cooked to order, tracked every step of the way.</h1>
+        <p class="lede">Basil connects your order straight to the kitchen and the rider bringing it to your door, so you're never guessing where it is.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{% url 'menu' %}">Browse the menu</a>
+        <a class="btn btn-outline" href="{% url 'about' %}">About Basil</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="steps-section">
+  <div class="container">
+    <div class="page-header centered">
+      <p class="eyebrow">How it works</p>
+      <h2>From kitchen to your door, no guessing.</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <span class="step-number">01</span>
+        <h3>Place your order</h3>
+        <p>Browse the menu, add what you're craving, and check out in a couple of taps.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">02</span>
+        <h3>The kitchen cooks</h3>
+        <p>Your order lands directly on the kitchen board the moment you check out.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">03</span>
+        <h3>It's on its way</h3>
+        <p>Dispatch picks it up the second it's ready and heads your way.</p>
+      </div>
+      <div class="step-card">
+        <span class="step-number">04</span>
+        <h3>Delivered fresh</h3>
+        <p>Track every status change in real time, right up to your door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if featured_items %}
+<section class="featured-section">
+  <div class="container">
+    <div class="page-header split">
+      <div>
+        <p class="eyebrow">Fan favorites</p>
+        <h2>Popular right now</h2>
+      </div>
+      <a class="btn btn-outline" href="{% url 'menu' %}">View full menu</a>
+    </div>
+    <div class="menu-grid">
+      {% for item in featured_items %}
+      <article class="card menu-card">
+        {% if item.image %}
+        <img class="menu-card-image" src="{{ item.image.url }}" alt="{{ item.name }}" loading="lazy">
+        {% endif %}
+        <div class="menu-card-body">
+          <h3>{{ item.name }}</h3>
+          <p class="menu-card-desc">{{ item.description }}</p>
+          <div class="menu-card-footer">
+            <span class="menu-card-price">${{ item.price|floatformat:2 }}</span>
+            <a class="btn btn-outline btn-sm" href="{% url 'product' item.id %}">View</a>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="about-section">
+  <div class="container about-grid">
+    <img class="about-image" src="{% static 'customer/images/menu/pexels-chan-walrus-958545.jpg' %}" alt="A shared table of freshly cooked dishes">
+    <div>
+      <p class="eyebrow">Why Basil</p>
+      <h2>Real kitchens. Updates as they happen.</h2>
+      <p class="lede">We built Basil around one idea: you shouldn't have to wonder where your food is. Every order moves through the same pipeline the kitchen and rider actually see.</p>
+      <ul class="check-list">
+        <li>Cooked fresh once your order hits the kitchen. Nothing sits waiting</li>
+        <li>Live status from placed to delivered, no refreshing and guessing</li>
+        <li>The same board the kitchen and dispatch team work from, not a black box</li>
+      </ul>
+      <a class="btn btn-primary" href="{% url 'about' %}">More about Basil</a>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container cta-band-inner">
+    <h2>Hungry? Let's fix that.</h2>
+    <p class="lede">Browse the full menu and get something cooking in minutes.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'menu' %}">Order now</a>
+  </div>
+</section>
+{% endblock content %}

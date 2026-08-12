@@ -1,0 +1,130 @@
+/* Sign in / sign up / account management pages (django-allauth). */
+
+.auth-shell {
+  display: flex;
+  justify-content: center;
+  padding-block: var(--space-8);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 26rem;
+  padding: var(--space-6);
+}
+
+.auth-card h1 {
+  font-size: var(--step-2);
+  margin-bottom: var(--space-2);
+}
+
+.auth-card .subtitle {
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+  margin-bottom: var(--space-5);
+}
+
+.auth-card form p {
+  margin-bottom: var(--space-4);
+}
+
+.auth-card form label {
+  display: block;
+  font-weight: 600;
+  font-size: var(--step--1);
+  margin-bottom: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.auth-card .helptext {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+}
+
+.auth-card ul.errorlist {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 var(--space-2);
+  color: var(--color-red-500);
+  font-size: var(--step--1);
+  font-weight: 600;
+}
+
+.auth-card .secondary-action {
+  display: block;
+  margin-top: var(--space-3);
+  font-size: var(--step--1);
+  text-align: center;
+}
+
+.social-login {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.social-btn svg {
+  flex-shrink: 0;
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--step--1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: var(--space-2);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-border);
+}
+
+.dashboard-choice {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.dashboard-choice-option {
+  display: block;
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-bg);
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+
+.dashboard-choice-option:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.dashboard-choice-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.dashboard-choice-desc {
+  display: block;
+  font-size: var(--step--1);
+  color: var(--color-text-muted);
+}

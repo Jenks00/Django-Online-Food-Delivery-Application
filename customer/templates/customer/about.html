@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}About{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/customer.css' %}">{% endblock %}
+
+{% block content %}
+<div class="container prose">
+  <p class="eyebrow" style="text-transform:uppercase;letter-spacing:.12em;font-size:var(--step--1);font-weight:700;color:var(--color-accent-strong);">About us</p>
+  <h1>A small kitchen, run like a real operation.</h1>
+  <p>Basil started as a single neighbourhood kitchen with one simple idea: customers should always know exactly what is happening to their order, and the people cooking and delivering it should never be guessing either.</p>
+  <p>Every order that comes through the storefront lands directly on the kitchen's dashboard the moment it's placed. From there it moves through a clear pipeline: placed, cooking, then ready for pickup, before handing off to the dispatch team, who take it out for delivery and mark it delivered the moment it reaches the door.</p>
+  <p>No phone calls back and forth, no paper tickets lost in the kitchen. Just one shared view of every order from checkout to doorstep.</p>
+</div>
+{% endblock content %}

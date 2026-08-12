@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/auth.css' %}">{% endblock %}
+{% block header_nav %}
+<ul class="main-nav">
+  <li><a href="{% url 'nav' %}">Storefront</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<div class="container auth-shell">
+  <div class="card auth-card">
+    {% block account_content %}{% endblock %}
+  </div>
+</div>
+{% endblock content %}
